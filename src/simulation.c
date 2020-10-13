@@ -34,7 +34,7 @@ static Loaded_img_t font_img; /* Image with font symbols */
 /* Define different simulation constants */
 /* Circles parameters as hard-coded circles parameters */
 #define CIRCLES_TYPES 5 /* Number of different types of circles */
-static const u32 [CIRCLES_TYPES] = {0x6daf43, 0x4870c8, 0xea8036, 0xaa1036, 0xaaff36}; /* Circles colors */
+static const u32 CIRCLES_COL[CIRCLES_TYPES] = {0x6daf43, 0x4870c8, 0xea8036, 0xaa1036, 0xaaff36}; /* Circles colors */
 static const f32 CIRCLES_PROB[CIRCLES_TYPES] = {0.20f, 0.20f, 0.20f, 0.20f, 0.20f}; /* Probabilities of appearence */ 
 static const u32 CIRCLES_RADIUSES[CIRCLES_TYPES] = {3, 5, 3, 5, 3}; /* Circles radiuses in pixels */
 

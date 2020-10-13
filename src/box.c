@@ -233,15 +233,4 @@ box_render(Box_t *box, Render_Buffer_t *render_buffer)
     draw_rect(box->BL_out.x, box->BL_out.y, box->wall_width, box->height_out, box->wall_clr, render_buffer);
     draw_rect(box->BL_out.x, box->BL_out.y, box->width_out, box->wall_width, box->wall_clr, render_buffer);
     draw_rect(box->BR_in.x, box->BR_in.y, box->wall_width, box->height_in, box->wall_clr, render_buffer);
-
-    /* Draw the BL of the blocks */
-    u32 i, j;
-    u32 x, y;
-    for (i = 0; i < box->blocks_side_num; ++i) {
-        for (j = 0; j < box->blocks_side_num; ++j) {
-            x = box->blocks[i][j].BL.x;
-            y = box->blocks[i][j].BL.y;
-            draw_pixel(x, y, 0xFFFFFF, render_buffer);
-        }
-    }
 }

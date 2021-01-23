@@ -1,3 +1,7 @@
+/*=============================================================================
+  Win32 platform with code for creation window and main program loop
+  =============================================================================*/
+
 /* Standard incudes: */
 #include <windows.h>
 #include <stdio.h>
@@ -10,24 +14,24 @@
 
 /* Timer parameters */
 #define IDT_TIMER1 101
-static UINT TIME_INTERVAL = 10; /* Produce about */
+static UINT TIME_INTERVAL = 10;  /* Produce about xxx fps*/
 
 /* Global variables */
-static b32 running = true;
-static Render_Buffer_t render_buffer; /* Buffer for the whole window image */
-static Input_t user_input = {0};
-static LARGE_INTEGER begin_counter;
-static LARGE_INTEGER end_counter;
-static LARGE_INTEGER frequency_counter;
-static f32 dtime = 0.01666f; /* 60 fps first frame*/
-static RECT rect;
-static HDC hdc = NULL;
-static MSG message = {0}; /* message that used in callback function */
-static u32 vk_code;
-static b32 was_down;
-static b32 is_down;
+static b32 is_running = true;  /* Flag for the game running indication */
+static Render_Buffer_t render_buffer;  /* Buffer for the whole window image */
+static Input_t user_input = {0};  /* Structure storing the user input data */
+static LARGE_INTEGER begin_counter;  /* Variable for dtime calculation */
+static LARGE_INTEGER end_counter;  /* Variable for dtime calculation */
+static LARGE_INTEGER frequency_counter;  /* Variable for dtime calculation */
+static f32 dtime = 0.01666f;  /* 60 fps first frame*/
+static RECT rect;  /* Rectangle with game screen coordinates */
+static HDC hdc = NULL;  /* Handle to the drawing content */
+static MSG message = {0};  /* message that used in callback function */
+static u32 vk_code;  /* Key virtual code */
+static b32 was_down;  /* Flag that a button was down */
+static b32 is_down;  /* Flag that a buttin is currently down */
 
-/* Callback function */
+/* Callback function definition */
 static LRESULT CALLBACK
 window_callback (HWND window, UINT message, WPARAM w_param, LPARAM l_param) {
 
@@ -36,9 +40,9 @@ window_callback (HWND window, UINT message, WPARAM w_param, LPARAM l_param) {
     switch (message) {
     case WM_CLOSE:
     case WM_DESTROY: {
-        running = false;
-    } break;
-        
+        is_running = false;
+        break;
+    }        
     case WM_CREATE: {
         /* Retrieves the coordinates of a window's client area */
         GetClientRect(window, &rect);
@@ -46,8 +50,8 @@ window_callback (HWND window, UINT message, WPARAM w_param, LPARAM l_param) {
         render_buffer.height = (u32)(rect.bottom - rect.top);
         
         /* Memory allocation with windows layer VirtualAlloc function */
-        render_buffer.pixels = VirtualAlloc(0, sizeof(u32) * render_buffer.width * render_buffer.height,
-                                            MEM_COMMIT|MEM_RESERVE, PAGE_READWRITE);
+        SIZE_T mem_size = sizeof(u32) * render_buffer.width * render_buffer.height;
+        render_buffer.pixels = VirtualAlloc(0, mem_size, MEM_COMMIT|MEM_RESERVE, PAGE_READWRITE);
 
         /* Fill the bitmap_info */
         render_buffer.bitmap_info.bmiHeader.biSize = sizeof(render_buffer.bitmap_info.bmiHeader);
@@ -56,8 +60,8 @@ window_callback (HWND window, UINT message, WPARAM w_param, LPARAM l_param) {
         render_buffer.bitmap_info.bmiHeader.biPlanes = 1;
         render_buffer.bitmap_info.bmiHeader.biBitCount = 32;
         render_buffer.bitmap_info.bmiHeader.biCompression = BI_RGB;
-    } break;
-
+		break;
+    }
     case WM_SYSKEYDOWN:
     case WM_SYSKEYUP:
     case WM_KEYDOWN:
@@ -137,7 +141,7 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
     QueryPerformanceCounter(&begin_counter);
     QueryPerformanceFrequency(&frequency_counter);
 
-    while ((GetMessage(&message, NULL, 0, 0)) && running) {
+    while ((GetMessage(&message, NULL, 0, 0)) && is_running) {
         TranslateMessage(&message);
         DispatchMessage(&message);
     }

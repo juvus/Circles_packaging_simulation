@@ -7,7 +7,7 @@ The application simulates a process of sequentially filling the limited space of
 
 The searching algorithm successively tries to find such a position of the circle center *O* at which the parameter *R* is minimized, which is equal to the sum of the distances from the center of the circle to the bottom point of the box *T* and from the center of the circle to some central point at the bottom of the box *P*, considering the restrictions above. This can be shown schematically in Fig. 1.
 
-<img src="/img/schematic_view.png" alt="Schematic view" width=30%>
+<img src="/img/schematic_view.png" alt="Schematic view" width=60%>
 
 **Fig. 1.** Representation of the process of searching the optimal place of currently parking circle in the box.
 
@@ -15,7 +15,7 @@ When the application is started, a graphic window opens with auxiliary informati
 
 The application is written in С using Win32API. It can successfully be compiled with the Mingw-w64 – GCC and run under Windows (version 7 and higher).
 
-<img src="/img/packing_process_1.png" alt="Packing process 1.png" width=30%>&nbsp;&nbsp;&nbsp;<img src="/img/packing_process_2.png" alt="Packing process 2.png" width=30%>&nbsp;&nbsp;&nbsp;<img src="/img/packing_process_3.png" alt="Packing process 3.png" width=30%>
+<img src="/img/packing_process_1.png" alt="Packing process 1.png" width=20%>&nbsp;&nbsp;&nbsp;<img src="/img/packing_process_2.png" alt="Packing process 2.png" width=20%>&nbsp;&nbsp;&nbsp;<img src="/img/packing_process_3.png" alt="Packing process 3.png" width=20%>
 
 **Fig. 2.** Stages of circle packaging process.
 
